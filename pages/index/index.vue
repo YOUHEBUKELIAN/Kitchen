@@ -7,7 +7,7 @@
 			interval="5000" 
 			duration="1500"	>
 			<swiper-item v-for="(item , index) in homeSlide" :key="index">
-				<image :src="item.src" mode="" @click="swiperClick(item)"></image>
+				<image :src="item.cover" mode="" @click="goDetail(item.id)"></image>
 			</swiper-item>
 		</swiper>
 	<view class="grid">
@@ -41,8 +41,9 @@
 				lists: [],
 				text:"加载中...",
 				fetchPageNum: 1,
-				homeSlide: [{src:"../../static/img/tab_01_c.png"},
-				{src:"../../static/logo.png"}], // 定义值接收轮播图数据
+				homeSlide: []
+					, // 定义值接收轮播图数据{src:"../../static/img/tab_01_c.png"},
+				//{src:"../../static/logo.png"}
 			}
 		},
 		//在 onLoad 生命周期中 获取服务器接口，返回成功后将结果绑定到 布局中
@@ -58,6 +59,18 @@
 		
 	onLoad() {
 			this.getData();
+			uni.request({
+				url: 'http://pope.utools.club/getCarouselRecipe',
+				method:'GET',
+				header: {
+					'content-type': 'application/x-www-form-urlencoded', 
+				},
+				success: (ret) => {
+					console.log(ret)
+					this.homeSlide=ret.data.data
+					console.log("hhh")
+					}
+					})
 		},
 	onNavigationBarButtonTap(e) {
 	    console.log("success")

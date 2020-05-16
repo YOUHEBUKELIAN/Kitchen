@@ -51,7 +51,23 @@
 		}
         ,{
             "path" : "pages/detail/detail",
-            "style" : {"navigationBarTitleText": "菜谱详情"}
+            "style" : {
+				"navigationBarTitleText": "菜谱详情",
+				"app-plus": {
+				          "bounce": "none", //关闭窗口回弹效果
+				          "titleNView": {
+				              "buttons": [ //原生标题栏按钮配置,
+				                  {
+				                       "type":"none",
+				                       "text":"\ue604",
+				                       "float":"right"
+									   //"fontSize":"16px"
+				                  }
+				               ]
+				           }
+				       }
+			
+			}
         }
     ],
 	"tabBar": {

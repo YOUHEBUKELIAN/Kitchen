@@ -37,7 +37,7 @@
 	
 	<view v-for="item in list.howToDoVoList">
 	<view>
-	<view><text style="margin-left:10px">第{{item.order+1}}步</text></view>
+	<view><text style="margin-left:10px">第{{item.order}}步</text></view>
 	
 	<view class="text">
 	<image :src="item.mediaUrl" style="height: 400upx;"></image>
@@ -91,6 +91,9 @@
 					this.list=ret.data.data
 				}
 			});
+		 },
+		 onNavigationBarButtonTap(e) {
+		    console.log("success")
 		 },
 		methods: {
 			 bindPickerChange: function(e) {
