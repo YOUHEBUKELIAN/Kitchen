@@ -46,7 +46,6 @@
 				//{src:"../../static/logo.png"}
 			}
 		},
-		//在 onLoad 生命周期中 获取服务器接口，返回成功后将结果绑定到 布局中
 		// getHomeSlideFunc() {
 		// 	var _self = this;
 		// 	uni.request({
