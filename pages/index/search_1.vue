@@ -8,18 +8,18 @@
 		</uni-nav-bar>
 		<view class="example-body">
 			<view v-for="item in items">
-				<view class="uni-padding-wrap uni-common-mt" style="background-color:#808080">
+				<view class="uni-padding-wrap uni-common-mt" style="background-color:#808080" @click="goDetail(item.id)">
 					<view class="uni-flex uni-row">
 						<view class="text uni-flex" style="width: 200rpx;height: 220rpx;-webkit-justify-content: center;justify-content: center;-webkit-align-items: center;align-items: center;">
-							<image :src="item.url" style="width: 150rpx;height: 150rpx;"></image>
+							<image :src="item.cover" style="width: 150rpx;height: 150rpx;"></image>
 						</view>
 						<view class="uni-flex uni-column" style="-webkit-flex: 1;flex: 1;-webkit-justify-content: space-between;justify-content: space-between;">
 							<view class="text" style="height: 120rpx;text-align: left;padding-left: 20rpx;padding-top: 10rpx;">
 								{{item.name}}
 							</view>
 							<view class="uni-flex uni-row">
-								<view class="text" style="-webkit-flex: 1;flex: 1;">{{item.numbers}}</view>
-								<view class="text" style="-webkit-flex: 1;flex: 1;">{{item.satisfaction}}</view>
+								<view class="text" style="-webkit-flex: 1;flex: 1;">{{item.collectionNumber}}</view>
+								<view class="text" style="-webkit-flex: 1;flex: 1;">{{item.browseNumber}}</view>
 							</view>
 						</view>
 					</view>
@@ -35,32 +35,109 @@
 		components: {
 			uniNavBar
 		},
-		data()
-		{
+		data() {
 			return {
-				items:[{
-					url:'../../satic/plus.png',
-					name:'青椒肉丝',
-					numbers:'9',
-					satisfaction:"5",
-				},
-				{
-					url:'../../satic/plus.png',
-					name:'青椒肉丝',
-					numbers:'9',
-					satisfaction:"5",
-				}],
+				search_value: "",
+
+				// items:[{
+				// 	url:'../../satic/plus.png',
+				// 	name:'青椒肉丝',
+				// 	numbers:'9',
+				// 	satisfaction:"5",
+				// },
+				// {
+				// 	url:'../../satic/plus.png',
+				// 	name:'青椒肉丝',
+				// 	numbers:'9',
+				// 	satisfaction:"5",
+				// }],
+				items: [],
+				exist: []
 			}
 		},
 		onShow: function(option) { //option为object类型，会序列化上个页面传递的参数
+			this.items = [];
 			uni.getStorage({
 				key: 'search_value',
 				success: function(res) {
+					this.search_value = res.data;
 					console.log(res.data);
+				}
+			});
+			console.log(this.search_value);
+			uni.request({
+				url: 'https://pope.utools.club/getRecipesByName', //仅为示例，并非真实接口地址。
+				data: {
+					name: this.search_value,
+				},
+				method: 'POST',
+				header: {
+					'content-type': 'application/x-www-form-urlencoded',
+				},
+				success: (res) => {
+					console.log(res.data);
+					this.text = 'request success';
+					if (res.data.code == 4) {
+						for (var i = 0; i < res.data.data.length; i++) {
+							var temp = {
+								id: res.data.data[i].id,
+								name: res.data.data[i].name,
+								cover: res.data.data[i].cover,
+								collectionNumber: res.data.data[i].collectionNumber,
+								browseNumber: res.data.data[i].browseNumber
+							};
+							this.exist.push(res.data.data[i].id);
+							this.items.push(temp);
+						}
+					} else if (res.data.code == -4) {
+						alert("查询失败")
+					}
+				},
+				fail: () => {
+					alert("网络在开小差，请重试");
+				}
+			});
+			uni.request({
+				url: 'https://pope.utools.club/getRecipesByMaterial', //仅为示例，并非真实接口地址。
+				data: {
+					material: this.search_value,
+				},
+				method: 'POST',
+				header: {
+					'content-type': 'application/x-www-form-urlencoded',
+				},
+				success: (res) => {
+					console.log(res.data);
+					this.text = 'request success';
+					if (res.data.code == 5) {
+						for (var i = 0; i < res.data.data.length; i++) {
+							if (this.exist.indexOf(res.data.data[i].id) == -1) {
+								var temp = {
+									id: res.data.data[i].id,
+									name: res.data.data[i].name,
+									cover: res.data.data[i].cover,
+									collectionNumber: res.data.data[i].collectionNumber,
+									browseNumber: res.data.data[i].browseNumber
+								};
+								this.items.push(temp);
+							}
+						}
+					} else if (res.data.code == -5) {
+						//alert("查询失败")
+					}
+				},
+				fail: () => {
+					alert("网络在开小差，请重试");
 				}
 			});
 		},
 		methods: {
+			goDetail(e) {
+				uni.navigateTo({
+					url: '../detail/detail?id=' + e
+				})
+				console.log(e)
+			},
 			toSearch_2() {
 				uni.navigateTo({
 					url: '../search/search',

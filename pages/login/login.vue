@@ -23,41 +23,54 @@
 		methods:{
 			login()
 			{
-				uni.switchTab({
-				    url: '../index/indexPage'
-				});
 				var userInfo = {
 					user:this.user,
 					password:this.password,
 				};
 				console.log("user:" + this.user);
 				console.log("password:" + this.password);
-				// uni.request({
-				//     url: 'https://www.example.com/request', //仅为示例，并非真实接口地址。
-				//     data: {
-				//         userInfo:userInfo,
-				//     },
-				//     header: {
-				//         'custom-header': 'hello' //自定义请求头信息
-				//     },
-				//     success: (res) => {
-				//         console.log(res.data);
-				//         this.text = 'request success';
-				// 		if(res.code == 1)
-				// 		{
-				// 			uni.navigateTo({
-				// 			    url: '../index/index'
-				// 			});
-				// 		}
-				// 		else if(res.code == 2)
-				// 		{
-				// 			alert("密码错误");
-				// 		}
-				//     },
-				// 	fail: () => {
-				// 		alert("网络在开小差，请重试");
-				// 	}
-				// });
+				uni.request({
+				    url: 'https://pope.utools.club/login', //仅为示例，并非真实接口地址。
+				    data: {
+				        nickname:this.user,
+						password:this.password
+				    },
+				    method:'POST',
+				    header: {
+				        'content-type': 'application/x-www-form-urlencoded', 
+				    },
+				    success: (res) => {
+				        console.log(res.data);
+				        this.text = 'request success';
+						if(res.data.code == 1)
+						{
+							uni.setStorage({
+								key: 'nick',
+								data: this.user,
+								success: function() {
+									console.log('success');
+								}
+							});
+							uni.setStorage({
+								key: 'user_picture',
+								data: this.user,
+								success: function() {
+									console.log('success');
+								}
+							});
+							uni.switchTab({
+							    url: '../index/indexPage'
+							});
+						}
+						else
+						{
+							alert("密码错误");
+						}
+				    },
+					fail: () => {
+						alert("网络在开小差，请重试");
+					}
+				});
 			}
 		}
 	}

@@ -37,14 +37,6 @@
 				</view>
 			</view>
 			
-			<view class="itemPanel">
-				<view v-for="item in items">
-					<image class="itemPicture" :src = "item.url"></image>
-					<text>{{item.description}}</text>
-					<text>{{item.author}}</text>
-				</view>
-			</view>
-			
 		</view>
 	</view>
 </template>

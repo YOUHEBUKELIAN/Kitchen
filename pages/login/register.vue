@@ -26,6 +26,7 @@
 				totalTime: 60,		//总时间，单位秒
 				recordingTime: 0, 	//记录时间变量
 				currentTime: 0, 	//显示时间变量
+				code:0,
 				
 				login:{
 					user:"",
@@ -46,20 +47,23 @@
 				this.currentTime = this.totalTime;
 				//开始倒计时
 				this.state = true;
-				console.log(this.login.phone);
 				//执行倒计时
 				this.checkingTime();
 				
+				console.log("电话号码:" + this.login.phone)
 				uni.request({
-				    url: 'https://www.example.com/request', //仅为示例，并非真实接口地址。
+				    url: 'https://pope.utools.club/getTelCode', //仅为示例，并非真实接口地址。
 				    data: {
-				        phoneNumber:123
+				        tel:this.login.phone
 				    },
+					method:'POST',
 				    header: {
-				        'custom-header': 'hello' //自定义请求头信息
+				        'content-type': 'application/x-www-form-urlencoded', 
 				    },
 				    success: (res) => {
 				        console.log(res.data);
+						this.code = res.data.data;
+						console.log(this.code);
 				        this.text = 'request success';
 				    }
 				});
@@ -98,25 +102,40 @@
 				console.log("phone:" + this.login.phone);
 				console.log("password1:" + this.login.password1);
 				console.log("password2:" + this.login.password2);
-				console.log("code:" + this.login.code);
+				console.log("telcode:" + this.login.code);
+				console.log("code:" + this.code);
 				if(this.login.password1 == this.login.password2)
 				{
-					var userInfo = {
-						user:this.login.user,
-						phone:this.login.phone,
+					var saveUserVo= {
+						nickname:this.login.user,
+						tel:this.login.phone,
 						password:this.login.password1,
-						code:this.login.code,
+						telcode:this.login.code,
 					};
 					uni.request({
-					    url: 'https://www.example.com/request', //仅为示例，并非真实接口地址。
+					    url: 'https://pope.utools.club/register', //仅为示例，并非真实接口地址。
 					    data: {
-					        userInfo:userInfo,
+					        nickname:this.login.user,
+					        tel:this.login.phone,
+					        password:this.login.password1,
+					        telCode:this.login.code,
+							code:this.code
 					    },
+					    method:'POST',
 					    header: {
-					        'custom-header': 'hello' //自定义请求头信息
+					        'content-type': 'application/x-www-form-urlencoded', 
 					    },
 					    success: (res) => {
 					        console.log(res.data);
+							if(res.data.code == 4)
+							{
+								alert("注册成功，请登录");
+								uni.navigateTo({
+								    url: './login'
+								});
+								
+								
+							}
 					        this.text = 'request success';
 					    }
 					});
