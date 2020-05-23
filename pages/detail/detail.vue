@@ -75,7 +75,7 @@
 			
 			         // 同步方式获取数据， 阻塞形式，如果做完了的话代码才会向下进行
 			                     try{
-			                         this.uid = uni.getStorageSync('nick');
+			                         this.uid = uni.getStorageSync('uid');
 			                         if(value){
 			                             console.log("const value = uni.getStorageSync('name') 同步获取 = " + value)
 			                         }
