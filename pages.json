@@ -109,9 +109,9 @@
 				              "buttons": [ //原生标题栏按钮配置,
 				                  {
 				                       "type":"none",
-				                       "text":"\ue604",
-				                       "float":"right"
-									   //"fontSize":"16px"
+				                       	"text":"\ue78c",
+				                       	"float":"right",
+				                       	"fontSrc": "/static/iconfont.ttf"
 				                  }
 				               ]
 				           }

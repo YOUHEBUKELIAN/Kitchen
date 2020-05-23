@@ -68,13 +68,7 @@
 				list:[]
 			}
 		},
-		 onNavigationBarButtonTap(e) { //导航栏自定义按钮点击监听事件
-		 console.log(e)
-		 uni.switchTab({
-		 	url:"../index/index",
-			"open-type":"switchTab"
-		 })
-		 },
+		
 		 onLoad(e) {
 		 	console.log(e.id);
 			uni.request({
@@ -93,7 +87,77 @@
 			});
 		 },
 		 onNavigationBarButtonTap(e) {
-		    console.log("success")
+		    console.log(e)
+		    let pages = getCurrentPages();
+		    let page = pages[pages.length - 1];
+		    // #ifdef APP-PLUS
+		    let currentWebview = page.$getAppWebview();
+		    let titleObj = currentWebview.getStyle().titleNView;
+		    console.log(titleObj)
+			var id=uni.getStorage('id')
+			console.log(id)
+		    if(titleObj.buttons[0].text=="\ue78c"){
+		        
+		    	
+		    	// uni.request({
+		    	// 	url: 'http://pope.utools.club/likeRecipe',
+		    	// 	data: {
+		    	// 		        userId: this.number,
+		    	// 				recipeId:id
+		    	// 		    },
+		    	// 	method:'POST',
+		    	// 	header: {
+		    	// 		'content-type': 'application/x-www-form-urlencoded', 
+		    	// 	},
+		    	// 	success: (ret) => {
+		    	// 		uni.showToast({
+		    	// 			title:"收藏成功"
+		    	// 		})
+		    	// 		},
+		    	// 		})
+		          // titleObj.buttons[0].text="\ue694";
+		    	  currentWebview.setTitleNViewButtonStyle(0,
+		    	  {
+		    	  	text:"\ue694"
+		    	  })
+		    	   uni.showToast({
+		    		   title:"收藏成功"
+		    	   })
+		        }
+		    	else{
+		            //titleObj.buttons[0].text="\ue78c";
+					// uni.request({
+					// 	url: 'http://pope.utools.club/cancelLikeRecipe',
+					// 	data: {
+					// 		        userId: this.number,
+					// 				recipeId:id
+					// 		    },
+					// 	method:'POST',
+					// 	header: {
+					// 		'content-type': 'application/x-www-form-urlencoded', 
+					// 	},
+					// 	success: (ret) => {
+					// 		uni.showToast({
+					// 			title:"收藏成功"
+					// 		})
+					// 		},
+					// 		})
+		    		currentWebview.setTitleNViewButtonStyle(0,
+		    		{
+		    			text:"\ue78c"
+		    		})
+		    		uni.showToast({
+		    		title:"取消收藏成功"
+		    		})
+		        }
+		    	
+		    	
+		    	//console.log(currentWebview.getStyle().titleNView.buttons[0])
+		    
+		    
+		    
+		    // #endif
+		    //this.onLoad()
 		 },
 		methods: {
 			 bindPickerChange: function(e) {
