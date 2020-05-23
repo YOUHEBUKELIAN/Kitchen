@@ -31,8 +31,8 @@
 			</view>
 			
 			<view class="order_status">
-				<view class="status" v-for="item in status">
-					<image class="icon" :src="item.url" mode="aspectFill"></image>
+				<view class="status" v-for="item in status" @click="goDetail(item)">
+					<image class="icon" :src="item.url" mode="aspectFill" ></image>
 					<text>{{item.name}}</text>
 				</view>
 			</view>
@@ -45,6 +45,8 @@
 	export default {
 		data() {
 			return {
+				nickname:"刘行",
+				
 				items:[{
 					url:'../../static/tabar/heart.png',
 					description:'12315544488979844',
@@ -54,22 +56,26 @@
 				status: [{
 						key: 1,
 						name: '我的菜谱',
-						url: '../../static/personal_page/my.png'
+						url: '../../static/personal_page/my.png',
+						pageurl:"./myRecipe"
 					},
 					{
 						key: 2,
 						name: '我的草稿箱',
-						url: '../../static/personal_page/caogao.png'
+						url: '../../static/personal_page/caogao.png',
+						pageurl:"./myRecipe"
 					},
 					{
 						key: 3,
 						name: '我的收藏',
-						url: '../../static/personal_page/heart.png'
+						url: '../../static/personal_page/heart.png',
+						pageurl:"./myRecipe"
 					},
 					{
 						key: 4,
 						name: '浏览历史',
-						url: '../../static/personal_page/history.png'
+						url: '../../static/personal_page/history.png',
+						pageurl:"./myRecipe"
 					}
 				],
 				
@@ -115,22 +121,29 @@
 			};
 		},
 		onLoad: () => {
-			uni.request({
-			    url: 'https://www.example.com/request', //仅为示例，并非真实接口地址。
-			    data: {
-			        userId:this.userId,
-			    },
-			    header: {
-			        'custom-header': 'hello' //自定义请求头信息
-			    },
-			    success: (res) => {
-			        console.log(res.data);
-			        this.text = 'request success';
-			    }
-			});
+			// uni.request({
+			//     url: 'https://www.example.com/request', //仅为示例，并非真实接口地址。
+			//     data: {
+			//         userId:this.userId,
+			//     },
+			//     header: {
+			//         'custom-header': 'hello' //自定义请求头信息
+			//     },
+			//     success: (res) => {
+			//         console.log(res.data);
+			//         this.text = 'request success';
+			//     }
+			// });
 		},
 		methods: {
-
+			goDetail(e) {
+				var url = "" +  e.pageurl + "?nickname=" + this.nickname;
+				console.log(url);
+				uni.navigateTo({
+					url: url
+				})
+				console.log(e)
+			},
 		},
 		computed: {
 

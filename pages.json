@@ -4,7 +4,8 @@
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "uni-app",
-				"navigationBarBackgroundColor": "#red"
+				"navigationBarBackgroundColor": "#red",
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -28,9 +29,9 @@
 				}
 			}
 		}, {
-			"path": "pages/index/page2",
+			"path": "pages/index/myRecipe",
 			"style": {
-				"navigationBarTitleText": "Page2",
+				"navigationBarTitleText": "myRecipe",
 				"navigationBarBackgroundColor": "#eee"
 			}
 		}, {
