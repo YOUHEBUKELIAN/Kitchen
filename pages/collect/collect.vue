@@ -36,12 +36,18 @@
 			//从本地缓存中 异步获取指定 key 对应的内容
 			// 同步方式获取数据， 阻塞形式，如果做完了的话代码才会向下进行
 			            
-			
+			try{
+			    this.uid = uni.getStorageSync('uid');
+			    if(value){
+			        console.log("const value = uni.getStorageSync('name') 同步获取 = " + value)
+			    }
+			}catch(e){
+			    //TODO handle the exception
+			};
 			uni.request({
 				url: 'http://pope.utools.club/findMyLove',
 				data: {
-					        Id: 1
-							//this.uid
+					        Id: this.uid
 					    },
 				method:'POST',
 				header: {
@@ -52,14 +58,7 @@
 					console.log(this.list)
 					},
 					})
-		try{
-		    this.uid = uni.getStorageSync('nick');
-		    if(value){
-		        console.log("const value = uni.getStorageSync('name') 同步获取 = " + value)
-		    }
-		}catch(e){
-		    //TODO handle the exception
-		};
+
 		},
 		onReachBottom() {
 			console.log('滑动到页面底部')

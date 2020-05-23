@@ -114,8 +114,7 @@
 		   	uni.request({
 		   		url: 'http://pope.utools.club/likeRecipe',
 		   		data: {
-		   			        userId: 1,
-							//this.uid,
+		   			        userId: this.uid,
 		   					recipeId:this.list.id
 		   			    },
 		   		method:'POST',
@@ -139,8 +138,7 @@
 		   		uni.request({
 		   			url: 'http://pope.utools.club/cancelLikeRecipe',
 		   			data: {
-		   				        userId: 1,
-								//this.uid,
+		   				        userId: this.uid,
 		   						recipeId:this.list.id
 		   				    },
 		   			method:'POST',
