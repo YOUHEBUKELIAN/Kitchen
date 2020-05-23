@@ -33,40 +33,29 @@
 			}
 		},
 		onLoad() {
-			this.getData();
-			uni.getProvider({
-				service: 'share',
-				success: (e) => {
-					let data = []
-					for (let i = 0; i < e.provider.length; i++) {
-						switch (e.provider[i]) {
-							case 'weixin':
-								data.push({
-									name: '分享到微信好友',
-									id: 'weixin'
-								})
-								data.push({
-									name: '分享到微信朋友圈',
-									id: 'weixin',
-									type: 'WXSenceTimeline'
-								})
-								break;
-							case 'qq':
-								data.push({
-									name: '分享到QQ',
-									id: 'qq'
-								})
-								break;
-							default:
-								break;
-						}
-					}
-					this.providerList = data;
+			//从本地缓存中 异步获取指定 key 对应的内容
+			var id=0;
+			            uni.getStorage({
+			                key: 'nick',
+			                success: function (res) {
+			                    console.log('name 异步获取 = ' + res.data);
+								id=res.data
+			                }
+			            });
+			uni.request({
+				url: 'http://pope.utools.club/findMyLove',
+				data: {
+					        Id: id
+					    },
+				method:'POST',
+				header: {
+					'content-type': 'application/x-www-form-urlencoded', 
 				},
-				fail: (e) => {
-					console.log('获取分享通道失败', e);
-				}
-			});
+				success: (ret) => {
+					this.list=ret.data
+					},
+					})
+		
 		},
 		onReachBottom() {
 			console.log('滑动到页面底部')
