@@ -45,8 +45,8 @@
 						if(res.data.code == 1)
 						{
 							uni.setStorage({
-								key: 'nick',
-								data: this.user,
+								key: 'uid',
+								data: res.data.data.id,
 								success: function() {
 									console.log('success');
 								}
