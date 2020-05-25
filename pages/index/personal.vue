@@ -10,7 +10,7 @@
 
 					</view>
 					<text>{{name}}</text>
-					<image src="../../static/fumou-center-template/setting.png" mode=""></image>
+					<image src="../../static/fumou-center-template/setting.png" mode="" @click="goSetting()"></image>
 				</view>
 				<text style="font-size: 15px;">{{time}}加入</text>
 				<view class="block">
@@ -75,7 +75,7 @@
 						key: 4,
 						name: '浏览历史',
 						url: '../../static/personal_page/history.png',
-						pageurl:"./myRecipe"
+						pageurl:"./myRecord"
 					}
 				],
 				
@@ -143,6 +143,11 @@
 					url: url
 				})
 				console.log(e)
+			},
+			goSetting(){
+				uni.navigateTo({
+					url: '../certification/certification'
+				})
 			},
 		},
 		computed: {

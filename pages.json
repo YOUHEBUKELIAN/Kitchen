@@ -42,9 +42,9 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "pages/index/page4",
+			"path": "pages/index/myRecord",
 			"style": {
-				"navigationBarTitleText": "Page-4",
+				"navigationBarTitleText": "我的浏览记录",
 				"navigationBarBackgroundColor": "#eee"
 			}
 		}, {
