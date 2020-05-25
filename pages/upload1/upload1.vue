@@ -11,7 +11,7 @@
 			 </view>
 		 </view>
 		 </image>
- <input class="uni-input" id="name"  confirm-type="done" style="font-size: 18px;margin: 5px;" placeholder="给这道菜谱起个名" />
+ <input class="uni-input" id="name1"  @input="name" confirm-type="done" style="font-size: 18px;margin: 5px;" placeholder="给这道菜谱起个名" />
  
  <picker @change="bindPickerChange" :value="index" :range="array">
 	<view class="uni-input" style="text-align: left;margin: 5px;padding: 5px;font-size: 14px;">时间：<span style="color: #4CD964;">{{array[index]}} ∨ </span></span></view>
@@ -41,18 +41,18 @@
 <view style="margin:20px;text-align: center;">
 <button type="primary" @click="add()" style="margin: auto;border-radius: 30px;width:80%;height:30px;text-align: center;line-height: 30px;font-size: 14px;display: block;" plain="true">再添加一种食材</button>	
 	</view>
-	<view><text style="margin-left: 10px;">烹饪步骤</text><text style="float: right;color: #4CD964;font-size: 14px;margin-right: 10px;">批量添加
-	</text></view>
+	<view><text style="margin-left: 10px;">烹饪步骤</text>
+	</view>
 	<view v-for="item in foot" :key="item.id">
 		<view :id="item.id">
 	<view><text style="margin-left:10px">第{{item.id+1}}步</text></view>
 	<image :src="uploadPics[item.id]" style="margin-top: 10px;margin-bottom: 10px;
 	height: 150px;
 	line-height: 150px;width: 100%; position: relative; z-index: 8;">
-		 <view  class="upfoot" :id="'hhh'+item.id"  @click="uploadPic" style="position: relative;margin-top: -165px; z-index: 9;" >
+		 <view  class="upfoot" :id="'hhh'+item.id"  @click="uploadPic" style="position: relative;margin-top: -165px; z-index: 8;" >
 			 <view class="text">
 				 <image src="../../static/img/upload.png" style="width: 16px;height: 16px;"></image>
-				 <text style="color: #A3A3A3;font-size: 15px;">上传封面</text>
+				 <text style="color: #A3A3A3;font-size: 15px;">上传图片</text>
 				 		
 			 </view>
 		 </view>
@@ -66,8 +66,8 @@
 	<button type="primary" @click="addFoot" style="margin: auto;border-radius: 30px;width:80%;height:30px;text-align: center;line-height: 30px;font-size: 14px;display: block;" plain="true">增加一步</button>	
 		</view>
 		
-	<view style="margin:0px;text-align: center;position: fixed;bottom: 50px;width: 100%;background-color: white;">
-	<button type="primary" @click="submit" style="margin: auto;border-radius: 30px;width:80%;height:30px;text-align: center;line-height: 30px;font-size: 14px;display: block;" plain="true">发布菜谱</button>	
+	<view style="text-align: center;">
+	<button type="primary" @click="submit" style="margin: auto;border-radius: 30px;width:100%;height:30px;text-align: center;line-height: 30px;font-size: 14px;display: block;position: fixed;bottom: 50px; z-index: 10;" plain="true">发布菜谱</button>	
 		</view>
 	</view>
 	
@@ -82,7 +82,7 @@
 			return {
 				array:['10分钟左右','10~30分钟','30~60分钟','1小时以上'],
 				index:0,
-				array2:['初级','中级','高级'],
+				array2:['简单','中等','困难'],
 				index2:0,
 				array3:['炸','炒','烤','焖','蒸','煎','煮'],
 				index3:0,
@@ -102,7 +102,8 @@
 				uploadPics:[],
 				uploadPicsFile:[],
 				counts:[],
-				express:[]
+				express:[],
+				caiName:""
 			}
 		},
 		 onNavigationBarButtonTap(e) { //导航栏自定义按钮点击监听事件
@@ -131,6 +132,10 @@
 			           this.index3 = e.target.value
 					   
 			       },
+			name:function(e){
+				console.log(e.target.value)
+				this.caiName=e.target.value
+			},
 			add:function(e){
 				this.i++
 				var d={oid:this.i,
@@ -273,12 +278,13 @@
 			var mas=[]
 			for(var i=0;i<this.foods.length;i++)
 			{
-			var ma={}
-			ma[this.foods[i]]=this.counts[i]
-			mas.push(ma)
+			// var ma={}
+			// ma[this.foods[i]]=this.counts[i]
+			mas.push(this.foods[i])
+			mas.push(this.counts[i])
 			}
 			console.log(mas)
-			console.log(document.getElementById('name').value)
+			console.log(this.caiName)
 			
 			console.log(this.array[this.index])
 			console.log(this.array2[this.index2])
@@ -309,8 +315,8 @@
 												name: 'cover',
 												fileType: 'image',
 												formData:{
-													name:document.getElementById('name').value,
-													author:"你是个傻瓜",
+													name:this.caiName,
+													author:"pope",
 													time:this.array[this.index],
 													material:mas,
 													difficulty:this.array2[this.index2],
@@ -353,7 +359,7 @@
 														console.log(ret)
 														
 														uni.switchTab({
-															url:"../upload1/upload1",
+															url:"../index/indexPage",
 															"open-type":"switchTab"
 														})
 												}else{
@@ -425,6 +431,8 @@
 }
 .text{
 	text-align: center;
+	height:50px;
+	line-height: 50px;
 }
 .uni-input{
 	text-align: center;
