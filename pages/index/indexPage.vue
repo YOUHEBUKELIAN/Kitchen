@@ -13,7 +13,7 @@
 	<view class="grid">
 			<view class="grid-c-06" v-for="item in lists" :key="item.id">
 				<view class="panel" @click="goDetail(item.id)">
-					<image class="card-img card-list2-img" :src="item.img_src"></image>
+					<image class="card-img card-list2-img" :src="item.cover"></image>
 					
 					<view class="card-bottm row">
 						<view class="car-title-view row">
