@@ -103,7 +103,8 @@
 				uploadPicsFile:[],
 				counts:[],
 				express:[],
-				caiName:""
+				caiName:"",
+				author:""
 			}
 		},
 		 onNavigationBarButtonTap(e) { //导航栏自定义按钮点击监听事件
@@ -285,7 +286,15 @@
 			}
 			console.log(mas)
 			console.log(this.caiName)
-			
+			try{
+			    this.author = uni.getStorageSync('nickName');
+			    if(value){
+			        console.log(this.author)
+			    }
+			}catch(e){
+			    //TODO handle the exception
+			};
+			console.log(this.author)
 			console.log(this.array[this.index])
 			console.log(this.array2[this.index2])
 			
@@ -316,7 +325,7 @@
 												fileType: 'image',
 												formData:{
 													name:this.caiName,
-													author:"pope",
+													author:this.author,
 													time:this.array[this.index],
 													material:mas,
 													difficulty:this.array2[this.index2],
