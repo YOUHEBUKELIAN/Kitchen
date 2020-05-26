@@ -57,18 +57,18 @@
 				success: (ret) => {
 					console.log(ret.data)
 					this.list = ret.data.data
-					if (res.data.code == 5) {
-						for (var i = 0; i < res.data.data.length; i++) {
+					if (ret.data.code == 5) {
+						for (var i = 0; i < ret.data.data.length; i++) {
 							var temp = {
-								id: res.data.data[i].id,
-								name: res.data.data[i].name,
-								cover: res.data.data[i].cover,
-								collectionNumber: res.data.data[i].collectionNumber,
-								browseNumber: res.data.data[i].browseNumber
+								id: ret.data.data[i].id,
+								name: ret.data.data[i].name,
+								cover: ret.data.data[i].cover,
+								collectionNumber: ret.data.data[i].collectionNumber,
+								browseNumber: ret.data.data[i].browseNumber
 							};
 							this.items.push(temp);
 						}
-					} else if (res.data.code == -5) {
+					} else if (ret.data.code == -5) {
 						//alert("查询失败")
 					}
 				}

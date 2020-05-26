@@ -22,21 +22,21 @@
 					<text class="block">关注 粉丝</text>
 				</view>
 			</view>
-			
+
 			<view class="baiban">
-				
+
 			</view>
 			<view class="baiban">
-				
+
 			</view>
-			
+
 			<view class="order_status">
 				<view class="status" v-for="item in status" @click="goDetail(item)">
-					<image class="icon" :src="item.url" mode="aspectFill" ></image>
+					<image class="icon" :src="item.url" mode="aspectFill"></image>
 					<text>{{item.name}}</text>
 				</view>
 			</view>
-			
+
 		</view>
 	</view>
 </template>
@@ -45,40 +45,41 @@
 	export default {
 		data() {
 			return {
-				nickname:"blue",
-				
-				items:[{
-					url:'../../static/tabar/heart.png',
-					description:'12315544488979844',
-					author:'qiang',
+				nickname: 0,
+				name: "",
+
+				items: [{
+					url: '../../static/tabar/heart.png',
+					description: '12315544488979844',
+					author: 'qiang',
 				}],
-				
+
 				status: [{
 						key: 1,
 						name: '我的菜谱',
 						url: '../../static/personal_page/my.png',
-						pageurl:"./myRecipe"
+						pageurl: "./myRecipe"
 					},
 					{
 						key: 2,
 						name: '我的草稿箱',
 						url: '../../static/personal_page/caogao.png',
-						pageurl:"./myRecipe"
+						pageurl: "./myRecipe"
 					},
 					{
 						key: 3,
 						name: '我的收藏',
 						url: '../../static/personal_page/heart.png',
-						pageurl:"./myRecipe"
+						pageurl: "./myRecipe"
 					},
 					{
 						key: 4,
 						name: '浏览历史',
 						url: '../../static/personal_page/history.png',
-						pageurl:"./myRecord"
+						pageurl: "./myRecord"
 					}
 				],
-				
+
 				menus: [{
 						name: '我的收藏',
 						icon: '../../static/fumou-center-template/5.png',
@@ -111,40 +112,35 @@
 					}
 
 				],
-				
-				userId:100,
-				name:"Nick",
-				time:"2019-2-13",
-				selfIntro:"添加个人简介,让厨友更加了解你",
-				focus:0,
-				fans:0,
+
+				userId: 100,
+				time: "2019-2-13",
+				selfIntro: "添加个人简介,让厨友更加了解你",
+				focus: 0,
+				fans: 0,
 			};
 		},
-		onLoad: () => {
-			// uni.request({
-			//     url: 'https://www.example.com/request', //仅为示例，并非真实接口地址。
-			//     data: {
-			//         userId:this.userId,
-			//     },
-			//     header: {
-			//         'custom-header': 'hello' //自定义请求头信息
-			//     },
-			//     success: (res) => {
-			//         console.log(res.data);
-			//         this.text = 'request success';
-			//     }
-			// });
+		onShow: function(option) {
+			uni.getStorage({
+				key: 'nickName',
+				success: function(res) {
+					console.log(res.data);
+					this.nickname = res.data;
+					this.name = res.data;
+				}
+			});
+			console.log(this.name);
 		},
 		methods: {
 			goDetail(e) {
-				var url = "" +  e.pageurl + "?nickname=" + this.nickname;
+				var url = "" + e.pageurl + "?nickname=" + this.nickname;
 				console.log(url);
 				uni.navigateTo({
 					url: url
 				})
 				console.log(e)
 			},
-			goSetting(){
+			goSetting() {
 				uni.navigateTo({
 					url: '../certification/certification'
 				})
@@ -206,6 +202,7 @@
 		border-bottom: 2px solid #F6F6F6;
 		padding-bottom: 35upx;
 		position: relative;
+
 		.profily_header {
 			height: 120upx;
 			width: 120upx;
@@ -217,13 +214,13 @@
 			margin-left: 20px;
 			font-size: 30upx;
 		}
-		
-		image{
+
+		image {
 			position: absolute;
 			height: 40upx;
 			width: 40upx;
 			right: 0px;
-			top:0px;
+			top: 0px;
 		}
 	}
 
@@ -240,12 +237,13 @@
 			letter-spacing: .5px;
 			display: flex;
 			flex-direction: column;
+
 			.icon {
 				width: 50upx;
 				height: 50upx;
 				margin: 0 auto;
 				margin-bottom: 5px;
-				
+
 			}
 		}
 	}
@@ -300,12 +298,12 @@
 		}
 	}
 
-	.block{
+	.block {
 		display: block;
 		font-size: 15px;
 	}
 
-	.flex_margin{
+	.flex_margin {
 		font-size: 15px;
 		margin-right: 9%;
 		font-weight: bold;

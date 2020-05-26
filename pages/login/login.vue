@@ -52,6 +52,13 @@
 								}
 							});
 							uni.setStorage({
+								key: 'nickName',
+								data: res.data.data.nickname,
+								success: function() {
+									console.log('success');
+								}
+							});
+							uni.setStorage({
 								key: 'user_picture',
 								data: this.user,
 								success: function() {
