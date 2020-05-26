@@ -31,7 +31,7 @@
 		}, {
 			"path": "pages/index/myRecipe",
 			"style": {
-				"navigationBarTitleText": "myRecipe",
+				"navigationBarTitleText": "我上传的菜谱",
 				"navigationBarBackgroundColor": "#eee"
 			}
 		}, {

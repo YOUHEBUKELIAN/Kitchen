@@ -45,8 +45,8 @@
 	export default {
 		data() {
 			return {
-				nickname: 0,
-				name: "",
+				nickname: "blue",
+				name:"",
 
 				items: [{
 					url: '../../static/tabar/heart.png',
@@ -121,15 +121,16 @@
 			};
 		},
 		onShow: function(option) {
-			uni.getStorage({
-				key: 'nickName',
-				success: function(res) {
-					console.log(res.data);
-					this.nickname = res.data;
-					this.name = res.data;
-				}
-			});
-			console.log(this.name);
+			try{
+			    const value = uni.getStorageSync('nickName');
+			    if(value){
+			        console.log(value)
+					this.nickname = value;
+					this.name = value;
+			    }
+			}catch(e){
+			   console.log("this.value")
+			};
 		},
 		methods: {
 			goDetail(e) {

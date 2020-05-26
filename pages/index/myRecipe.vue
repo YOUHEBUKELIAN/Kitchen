@@ -44,6 +44,7 @@
 			})
 		},
 		onLoad(e) {
+			this.items = [];
 			console.log(e.nickname);
 			uni.request({
 				url: 'http://pope.utools.club/findMyRecipe',
@@ -57,7 +58,7 @@
 				success: (ret) => {
 					console.log(ret.data)
 					this.list = ret.data.data
-					if (ret.data.code == 5) {
+					if (ret.data.code == 2) {
 						for (var i = 0; i < ret.data.data.length; i++) {
 							var temp = {
 								id: ret.data.data[i].id,
