@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<uni-nav-bar>
+		<uni-nav-bar class="nav-bar">
 			<view class="input-view">
 				<uni-icons class="input-uni-icon" type="search" size="22" color="#666666" />
 				<input confirm-type="search" class="nav-bar-input" type="text" placeholder="想吃点什么" @confirm="confirm" @focus="toSearch_2">
@@ -174,6 +174,10 @@
 	view {
 		font-size: 14px;
 		line-height: inherit;
+	}
+
+	.nav-bar{
+		margin-top: 45px;
 	}
 
 	.example {

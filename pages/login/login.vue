@@ -78,6 +78,7 @@
 
 <style>
 	.zai-box{
+		margin-top: 80px;
 		padding: 0 100upx;
 		position: relative;
 	}

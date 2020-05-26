@@ -175,13 +175,6 @@
 				"selectedIconPath": "static/tabBar/my-hover.png",
 				"text": "我的"
 			}
-		],
-		"midButton": {
-			"width": "50px",
-			"height": "50px",
-			"iconPath": "static/andy-ADTabbar/midButton.png",
-			"iconWidth": "55px"
-			// "backgroundImage":"static/images/tabbar/plus.png"
-		}
+		]
 	}
 }
