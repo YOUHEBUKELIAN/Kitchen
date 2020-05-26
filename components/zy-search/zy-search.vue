@@ -146,6 +146,7 @@
 
 <style lang="less" scoped>
 	.bg_white{
+		margin-top: 30px;
 		background-color: white;
 	}
 	

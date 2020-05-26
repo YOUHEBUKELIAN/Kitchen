@@ -3,23 +3,23 @@
 		<uni-nav-bar class="nav-bar">
 			<view class="input-view">
 				<uni-icons class="input-uni-icon" type="search" size="22" color="#666666" />
-				<input confirm-type="search" class="nav-bar-input" type="text" placeholder="想吃点什么" @confirm="confirm" @focus="toSearch_2">
+				<input confirm-type="search" class="nav-bar-input" type="text" placeholder="想吃点什么"	@confirm="confirm" @click="toSearch_2">
 			</view>
 		</uni-nav-bar>
 		<view class="example-body">
 			<view v-for="item in items">
-				<view class="uni-padding-wrap uni-common-mt" style="background-color:#808080" @click="goDetail(item.id)">
+				<view class="uni-padding-wrap uni-common-mt" style="background-color:white" @click="goDetail(item.id)">
 					<view class="uni-flex uni-row">
 						<view class="text uni-flex" style="width: 200rpx;height: 220rpx;-webkit-justify-content: center;justify-content: center;-webkit-align-items: center;align-items: center;">
 							<image :src="item.cover" style="width: 150rpx;height: 150rpx;"></image>
 						</view>
 						<view class="uni-flex uni-column" style="-webkit-flex: 1;flex: 1;-webkit-justify-content: space-between;justify-content: space-between;">
-							<view class="text" style="height: 120rpx;text-align: left;padding-left: 20rpx;padding-top: 10rpx;">
+							<view class="text" style="font-size: 20px;  height: 120rpx;text-align: left;padding-left: 20rpx;padding-top: 10rpx;">
 								{{item.name}}
 							</view>
 							<view class="uni-flex uni-row">
-								<view class="text" style="-webkit-flex: 1;flex: 1;">{{item.collectionNumber}}</view>
-								<view class="text" style="-webkit-flex: 1;flex: 1;">{{item.browseNumber}}</view>
+								<view class="text" style="-webkit-flex: 1;flex: 1;">收藏人数：{{item.collectionNumber}}</view>
+								<view class="text" style="-webkit-flex: 1;flex: 1;">浏览人数：{{item.browseNumber}}</view>
 							</view>
 						</view>
 					</view>
@@ -37,7 +37,8 @@
 		},
 		data() {
 			return {
-				search_value: "",
+				search_value: 0,
+				myFcous:true,
 
 				// items:[{
 				// 	url:'../../satic/plus.png',
@@ -56,15 +57,19 @@
 			}
 		},
 		onShow: function(option) { //option为object类型，会序列化上个页面传递的参数
+			this.myFcous = false;
+			this.exist = [];
 			this.items = [];
-			uni.getStorage({
-				key: 'search_value',
-				success: function(res) {
-					this.search_value = res.data;
-					console.log(res.data);
-				}
-			});
-			console.log(this.search_value);
+			try {
+			    const value = uni.getStorageSync('search_value');
+			    if (value) {
+			        console.log(value);
+					this.search_value = value;
+			    }
+			} catch (e) {
+			    // error
+			}
+			
 			uni.request({
 				url: 'https://pope.utools.club/getRecipesByName', //仅为示例，并非真实接口地址。
 				data: {
@@ -90,13 +95,14 @@
 							this.items.push(temp);
 						}
 					} else if (res.data.code == -4) {
-						alert("查询失败")
+						//alert("查询失败")
 					}
 				},
 				fail: () => {
 					alert("网络在开小差，请重试");
 				}
 			});
+		
 			uni.request({
 				url: 'https://pope.utools.club/getRecipesByMaterial', //仅为示例，并非真实接口地址。
 				data: {
@@ -107,7 +113,7 @@
 					'content-type': 'application/x-www-form-urlencoded',
 				},
 				success: (res) => {
-					console.log(res.data);
+					console.log("搜索结果:" + res.data.data);
 					this.text = 'request success';
 					if (res.data.code == 5) {
 						for (var i = 0; i < res.data.data.length; i++) {
@@ -139,6 +145,7 @@
 				console.log(e)
 			},
 			toSearch_2() {
+				
 				uni.navigateTo({
 					url: '../search/search',
 					animationType: 'pop-in',

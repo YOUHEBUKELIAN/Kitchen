@@ -45,7 +45,7 @@
 	export default {
 		data() {
 			return {
-				nickname:"刘行",
+				nickname:"blue",
 				
 				items:[{
 					url:'../../static/tabar/heart.png',

@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="white_panel">
 		<zy-search :is-focus="false" :theme="themeClass" :show-want="true" :speechEngine="speechEngine" :hot-list="hotList"
 		 @getSearchText="getSearchText"></zy-search>
 	</view>
@@ -15,7 +15,7 @@
 			return {
 				themeClass: 'block',
 				speechEngine: 'baidu', //语音识别引擎
-				hotList: ['栏目1', '栏目2', '栏目3', '栏目4'] //初始化推荐列表
+				hotList: ['鸡肉', '土豆', '凉面', '黄焖鸡'] //初始化推荐列表
 			}
 		},
 		methods: {
@@ -24,14 +24,21 @@
 					title: '回调的搜索信息: ' + e,
 					icon: "none"
 				});
-
-				uni.setStorage({
-					key: 'search_value',
-					data: e,
-					success: function() {
-						console.log('success');
-					}
-				});
+				
+				try {
+				    uni.setStorageSync('search_value', e);
+				} catch (e) {
+				    // error
+				}
+				
+				// 异步会导致下一个界面出问题
+				// uni.setStorage({
+				// 	key: 'search_value',
+				// 	data: e,
+				// 	success: function() {
+				// 		console.log('success');
+				// 	}
+				// });
 
 				uni.switchTab({
 					url: '/pages/index/search_1',
